@@ -1,7 +1,7 @@
 go.minfraud
 ===========
 
-[![Build Status](https://snap-ci.com/savaki/go.minfraud/branch/master/build_image)](https://snap-ci.com/savaki/go.minfraud/branch/master)
+[![GoDoc](https://godoc.org/github.com/savaki/go.minfraud?status.svg)](https://godoc.org/github.com/savaki/go.minfraud) [![Build Status](https://snap-ci.com/savaki/go.minfraud/branch/master/build_image)](https://snap-ci.com/savaki/go.minfraud/branch/master)
 
 golang implementation of maxmind's fraud library
 

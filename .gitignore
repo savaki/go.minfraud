@@ -1,0 +1,9 @@
+# ignore binaries
+/minfraud/minfraud
+
+# ignore intellij temp files
+/.idea
+/*.ipr
+/*.iws
+/*.iml
+

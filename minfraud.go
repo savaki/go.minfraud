@@ -1,11 +1,9 @@
 package minfraud
 
 import (
-	"io/ioutil"
+	"code.google.com/p/go.net/context"
+	"github.com/savaki/httpctx"
 	"log"
-	"net/http"
-	"strconv"
-	"strings"
 )
 
 const (
@@ -13,38 +11,33 @@ const (
 )
 
 type Client struct {
+	HttpClient httpctx.HttpClient
 	LicenseKey string
 }
 
 func New(licenseKey string) *Client {
 	return &Client{
+		HttpClient: httpctx.NewClient(),
 		LicenseKey: licenseKey,
 	}
 }
 
 func (c *Client) Do(query Query) (*QueryResult, error) {
+	ctx := context.Background()
+	return c.DoWithContext(ctx, query)
+}
+
+func (c *Client) DoWithContext(ctx context.Context, query Query) (*QueryResult, error) {
+	params := query.Values()
+	params.Add("license_key", c.LicenseKey)
+
 	if query.Verbose {
 		log.Println("minfraud.Do(...)")
-		log.Printf("body => %s\n", query.Values().Encode())
+		log.Printf("body => %s\n", params.Encode())
 	}
 
-	body := "license_key=" + c.LicenseKey + "&" + query.Values().Encode()
-	req, err := http.NewRequest("POST", MinfraudURL, strings.NewReader(body))
-	if err != nil {
-		return nil, err
-	}
-
-	// set additional headers
-	req.Header.Set("Content-Type", "application/x-www-form-urlencoded")
-	req.Header.Set("Content-Length", strconv.Itoa(len(body)))
-
-	resp, err := http.DefaultClient.Do(req)
-	if err != nil {
-		return nil, err
-	}
-	defer resp.Body.Close()
-
-	data, err := ioutil.ReadAll(resp.Body)
+	var data []byte
+	err := c.HttpClient.Get(ctx, MinfraudURL, &params, &data)
 	if err != nil {
 		return nil, err
 	}

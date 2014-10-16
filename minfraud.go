@@ -12,13 +12,23 @@ const (
 	MinfraudURL = "https://minfraud.maxmind.com/app/ccv2r"
 )
 
-func Do(query Query) (*QueryResult, error) {
+type Client struct {
+	LicenseKey string
+}
+
+func New(licenseKey string) *Client {
+	return &Client{
+		LicenseKey: licenseKey,
+	}
+}
+
+func (c *Client) Do(query Query) (*QueryResult, error) {
 	if query.Verbose {
 		log.Println("minfraud.Do(...)")
 		log.Printf("body => %s\n", query.Values().Encode())
 	}
 
-	body := query.Values().Encode()
+	body := "license_key=" + c.LicenseKey + "&" + query.Values().Encode()
 	req, err := http.NewRequest("POST", MinfraudURL, strings.NewReader(body))
 	if err != nil {
 		return nil, err

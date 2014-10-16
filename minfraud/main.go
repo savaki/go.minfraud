@@ -35,12 +35,11 @@ func Run(c *cli.Context) {
 	verbose := c.Bool(verboseFlag)
 
 	query := minfraud.Query{
-		IpAddr:     ip,
-		LicenseKey: license,
-		Verbose:    verbose,
+		IpAddr:  ip,
+		Verbose: verbose,
 	}
 
-	result, err := minfraud.Do(query)
+	result, err := minfraud.New(license).Do(query)
 	if err != nil {
 		log.Fatalln(err)
 	}

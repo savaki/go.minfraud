@@ -12,7 +12,6 @@ import (
 
 type Query struct {
 	IpAddr         string
-	LicenseKey     string
 	City           string
 	Region         string
 	Postal         string
@@ -72,7 +71,6 @@ func (q Query) Values() url.Values {
 
 	// Required Fields
 	set("i", q.IpAddr)
-	set("license_key", q.LicenseKey)
 
 	// Billing Address
 	set("city", q.City)

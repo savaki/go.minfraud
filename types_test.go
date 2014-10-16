@@ -9,7 +9,6 @@ func TestValues(t *testing.T) {
 	Convey("Given a Query", t, func() {
 		query := Query{
 			IpAddr:      "1.2.3.4",
-			LicenseKey:  "license-key",
 			Email:       "joe.public@gmail.com",
 			OrderAmount: 10.50,
 		}

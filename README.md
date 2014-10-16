@@ -6,10 +6,29 @@ golang implementation of maxmind's fraud library
 ## Example
 
 ```
+package main
 
+import (
+	"encoding/json"
+	"github.com/savaki/go.minfraud"
+	"os"
+)
+
+func main() {
+	licenseKey := "your-license-key"
+	client := minfraud.New(licenseKey)
+
+	// minfraud.Query supports for the full range of query options as defined by
+	// http://dev.maxmind.com/minfraud/
+	query := minfraud.Query{
+		IpAddr: "1.2.3.4", // ip address to check
+	}
+	result, _ := client.Do(query)
+
+	// dumps results to screen as json
+	json.NewEncoder(os.Stdout).Encode(result)
+}
 ```
-
----
 
 ## See Also
 

@@ -1,9 +1,10 @@
 package minfraud
 
 import (
-	"code.google.com/p/go.net/context"
-	"github.com/savaki/httpctx"
 	"log"
+
+	"github.com/savaki/httpctx"
+	"golang.org/x/net/context"
 )
 
 const (

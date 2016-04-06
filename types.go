@@ -64,7 +64,7 @@ func (q Query) Values() url.Values {
 
 	setDecimal := func(key string, value float32) {
 		if value != 0.0 {
-			text := fmt.Sprintf("3.3f", value)
+			text := fmt.Sprintf("%3.3f", value)
 			values.Set(key, text)
 		}
 	}
